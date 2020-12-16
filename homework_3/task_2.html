@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 2</title>
+</head>
+<body>
+<script>
+    let basket = []
+    let product_1 = ['Принтер', 14000]
+    let product_2 = ['Сканер', 8000]
+    let product_3 = ['Монитор', 13500]
+
+    function addToBasket(prod) {
+        return basket.push(prod)
+    }
+
+    function countBasketPrice(bask) {
+        let sum = 0
+        for (const keys in bask) {
+            sum += bask[keys][1]
+        }
+        return sum
+    }
+
+    addToBasket(product_1)
+    addToBasket(product_2)
+    addToBasket(product_3)
+
+    console.log('Итого: ' + countBasketPrice(basket))
+
+</script>
+</body>
+</html>
