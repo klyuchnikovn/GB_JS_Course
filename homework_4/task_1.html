@@ -11,9 +11,9 @@
         let myObj = {}
         if (0 <= Number(input) <= 999) {
             return myObj = {
-                units: input[2],
-                dozens: input[1],
-                hundreds: input[0]
+                units: Math.floor(input % 10),
+                dozens: Math.floor(input / 10 % 10),
+                hundreds: Math.floor(input / 100 % 10)
             }
         } else {
             console.log('Неверный ввод!')
