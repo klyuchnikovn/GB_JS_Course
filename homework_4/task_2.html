@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 2</title>
+</head>
+<body>
+<script>
+
+    function CreateProduct(name, cost=0) {
+        this.name = name;
+        this.cost = cost;
+    }
+
+    let Basket = {
+        products: [],
+        cost: 0
+    }
+
+    function addToBasket(data) {
+        let _product = data.name
+        let _cost = data.cost
+        Basket.products.push(_product)
+        Basket.cost += _cost
+    }
+
+    let product1 = new CreateProduct('Принтер', 14500);
+    let product2 = new CreateProduct('Сканер', 8000);
+    let product3 = new CreateProduct('Монитор', 22000);
+
+    addToBasket(product1)
+    addToBasket(product2)
+    addToBasket(product3)
+
+    console.log('Итого в корзине: ' + Basket.cost)
+
+</script>
+</body>
+</html>

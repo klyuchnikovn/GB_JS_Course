@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 1</title>
+</head>
+<body>
+<script>
+    let userInput = prompt('Введите число: ');
+    function inputToObj(input) {
+        let myObj = {}
+        if (0 <= Number(input) <= 999) {
+            return myObj = {
+                units: input[2],
+                dozens: input[1],
+                hundreds: input[0]
+            }
+        } else {
+            console.log('Неверный ввод!')
+            return myObj
+        }
+    }
+
+    let result = inputToObj(userInput);
+
+    console.log('единиц: ' + result.units + ', десятков: ' + result.dozens + ', сотен: ' + result.hundreds);
+
+</script>
+</body>
+</html>
