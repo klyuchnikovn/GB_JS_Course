@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 2</title>
+</head>
+<body>
+<script>
+
+    let Basket = {
+        products: [['Принтер', 14500], ['Сканер', 8000], ['Монитор', 22000]],
+
+        addToBasket: function (product, cost) {
+            let dummy = [product, cost]
+            this.products.push(dummy)
+        },
+
+        calculateCost: function () {
+            let result = 0
+            for (let i = 0; i <= this.products.length - 1; i++) {
+                result += this.products[i][1]
+            }
+            return result
+        }
+    };
+
+    console.log('Итого в корзине: ' + Basket.calculateCost())
+
+    Basket.addToBasket('Клавиатура', 2300)
+
+    console.log('Итого в корзине: ' + Basket.calculateCost())
+
+</script>
+</body>
+</html>
