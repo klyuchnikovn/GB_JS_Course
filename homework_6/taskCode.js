@@ -158,7 +158,7 @@ const Products = {
             imgGalleryElem.innerHTML += `
                         <div class="img_left"><button onclick="Products.imageInit(777, ${parseInt(num) - 1})" 
                         class="img_left_b"></button></div>
-                        <img onclick="Products.imageInit(777, ${num})" class="big_img" src="img_b/img_${num}.png" 
+                        <img onclick="Products.imageInit(777, 666)" class="big_img" src="img_b/img_${num}.png" 
                         alt="img"><div class="img_right"><button onclick="Products.imageInit(777, ${parseInt(num) + 1})" 
                         class="img_right_b"></button></div>
                         `;
@@ -198,12 +198,18 @@ const Products = {
             rightImg.style.position = 'absolute';
             rightImg.style.right = '0px';
         } else {
-            if (alt > 1 ||  this.products.length) {
+            if (alt !== 666) {
                 let imgGallery = document.querySelector('#gallery');
                 imgGallery.parentNode.removeChild(imgGallery);
                 let globalParent = document.querySelector('body');
                 globalParent.innerHTML += '<div id="gallery"></div>';
-                Products.imageInit(`${parseInt(alt)}`);
+                if (alt === 0) {
+                    Products.imageInit(`${this.products.length}`);
+                } else if (alt === this.products.length + 1) {
+                    Products.imageInit(1);
+                } else {
+                    Products.imageInit(alt);
+                }
             } else {
                 let imgGallery = document.querySelector('#gallery');
                 imgGallery.parentNode.removeChild(imgGallery);
@@ -211,7 +217,6 @@ const Products = {
                 globalParent.innerHTML += '<div id="gallery"></div>';
             }
         }
-
     },
 
     productStructure(block) {
