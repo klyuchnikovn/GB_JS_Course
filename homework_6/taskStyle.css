@@ -1,0 +1,48 @@
+#products {
+    font-family: Roboto, serif;
+    width: 500px;
+    height: 700px;
+    float: left;
+    margin: 20px;
+    background-color: rgba(233, 117, 21, 0.3);
+    border: 2px solid lightgrey;
+    box-sizing: border-box;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#basket {
+    font-family: Roboto, serif;
+    width: 500px;
+    height: 700px;
+    float: left;
+    margin: 20px;
+    background-color: rgba(205, 162, 153, 0.3);
+    border: 2px solid lightgrey;
+    box-sizing: border-box;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#clear_basket {
+    font-family: Roboto, serif;
+    float: left;
+    clear: both;
+    background-color: rgba(0, 0, 0, 0.0);
+    border: 1px solid grey;
+    color: brown;
+    width: 210px;
+    height: 40px;
+    font-size: 130%;
+    border-radius: 5px;
+    outline: none;
+}
+
+#clear_basket:hover {
+    background-color: lightgrey;
+    outline: none;
+}
+
+#clear_basket:active {
+    outline: none;
+}
