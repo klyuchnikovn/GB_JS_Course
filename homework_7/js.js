@@ -1,4 +1,5 @@
 "use strict";
+
 const settings = {
     rowsCount: 21,
     colsCount: 21,
@@ -84,7 +85,7 @@ const map = {
         }
     },
 
-    render(snakePointsArray, foodPoint) {
+    render(snakePointsArray, foodPoint, hurdlePoint) {
         for (const cell of this.usedCells) {
             cell.className = 'cell';
         }
@@ -96,6 +97,10 @@ const map = {
             snakeCell.classList.add(index === 0 ? 'snakeHead' : 'snakeBody');
             this.usedCells.push(snakeCell);
         });
+
+        const hurdleCell = this.cells[`x${hurdlePoint.x}_y${hurdlePoint.y}`];
+        hurdleCell.classList.add('hurdle');
+        this.usedCells.push(hurdleCell);
 
         const foodCell = this.cells[`x${foodPoint.x}_y${foodPoint.y}`];
         foodCell.classList.add('food');
@@ -145,13 +150,25 @@ const snake = {
 
         switch(this.direction) {
             case 'up':
-                return {x: firstPoint.x, y: firstPoint.y - 1};
+                if (firstPoint.y === 0) {
+                    return { x: firstPoint.x, y: config.getRowsCount() - 1 };
+                }
+                return { x: firstPoint.x, y: firstPoint.y - 1 };
             case 'right':
-                return {x: firstPoint.x + 1, y: firstPoint.y};
+                if (firstPoint.x === config.getColsCount() - 1) {
+                    return { x: 0, y: firstPoint.y };
+                }
+                return { x: firstPoint.x + 1, y: firstPoint.y };
             case 'down':
-                return {x: firstPoint.x, y: firstPoint.y + 1};
+                if (firstPoint.y === config.getRowsCount() - 1) {
+                    return { x: firstPoint.x, y: 0 };
+                }
+                return { x: firstPoint.x, y: firstPoint.y + 1 };
             case 'left':
-                return {x: firstPoint.x - 1, y: firstPoint.y};
+                if (firstPoint.x === 0) {
+                    return { x: config.getColsCount() - 1, y: firstPoint.y };
+                }
+                return { x: firstPoint.x - 1, y: firstPoint.y };
         }
     },
 
@@ -179,6 +196,27 @@ const food = {
     isOnPoint(point) {
         return this.x === point.x && this.y === point.y;
     },
+};
+
+const hurdle = {
+    x: null,
+    y: null,
+
+    getCoordinates() {
+        return {
+            x: this.x,
+            y: this.y,
+        };
+    },
+
+    setCoordinates(point) {
+        this.x = point.x;
+        this.y = point.y;
+    },
+
+    isOnPoint(point) {
+        return this.x === point.x && this.y === point.y;
+    }
 };
 
 const status = {
@@ -209,6 +247,7 @@ const game = {
     config,
     map,
     snake,
+    hurdle,
     food,
     status,
     tickInterval: null,
@@ -230,10 +269,20 @@ const game = {
         this.reset();
     },
 
+    showScore() {
+        let counter = document.getElementById('counter');
+        counter.innerText = `Счет: ${this.getCount()}`;
+    },
+
+    getCount() {
+        return this.snake.getBody().length - 1;
+    },
+
     reset() {
         this.stop();
         this.snake.init(this.getStartSnakeBody(), 'up');
         this.food.setCoordinates(this.getRandomFreeCoordinates());
+        this.hurdle.setCoordinates(this.getRandomFreeCoordinates());
         this.render();
     },
 
@@ -262,8 +311,9 @@ const game = {
 
         if (this.food.isOnPoint(this.snake.getNextStepHeadPoint())) {
             this.snake.growUp();
+            this.showScore();
             this.food.setCoordinates(this.getRandomFreeCoordinates());
-
+            this.hurdle.setCoordinates(this.getRandomFreeCoordinates());
             if (this.isGameWon()) this.finish();
         }
 
@@ -300,11 +350,11 @@ const game = {
     },
 
     render() {
-        this.map.render(this.snake.getBody(), this.food.getCoordinates());
+        this.map.render(this.snake.getBody(), this.food.getCoordinates(), this.hurdle.getCoordinates());
     },
 
     getRandomFreeCoordinates() {
-        const exclude = [this.food.getCoordinates(), ...this.snake.getBody()];
+        const exclude = [this.food.getCoordinates(), this.hurdle.getCoordinates(), ...this.snake.getBody()];
 
         while (true) {
             const rndPoint = {
@@ -373,7 +423,8 @@ const game = {
             nextHeadPoint.x < this.config.getColsCount() &&
             nextHeadPoint.y < this.config.getRowsCount() &&
             nextHeadPoint.x >= 0 &&
-            nextHeadPoint.y >= 0;
+            nextHeadPoint.y >= 0 &&
+            !this.hurdle.isOnPoint(nextHeadPoint);
     },
 
     isGameWon() {
