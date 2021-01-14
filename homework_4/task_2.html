@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 2</title>
+</head>
+<body>
+<script>
+
+    let Basket = {
+<<<<<<< Updated upstream
+        products: [['Принтер', 14500], ['Сканер', 8000], ['Монитор', 22000]],
+
+        addToBasket: function (product, cost) {
+            let dummy = [product, cost]
+            this.products.push(dummy)
+        },
+
+        calculateCost: function () {
+            let result = 0
+            for (let i = 0; i <= this.products.length - 1; i++) {
+                result += this.products[i][1]
+=======
+        products: [{name: 'Принтер', cost: 14500}, {name: 'Сканер', cost: 8000}, {name: 'Монитор', cost: 22000}],
+
+        addToBasket(product, cost) {
+            this.products.push({name: product, cost: cost})
+        },
+
+        calculateCost() {
+            let result = 0
+            for (let i = 0; i <= this.products.length - 1; i++) {
+                result += this.products[i].cost
+>>>>>>> Stashed changes
+            }
+            return result
+        }
+    };
+
+    console.log('Итого в корзине: ' + Basket.calculateCost())
+
+    Basket.addToBasket('Клавиатура', 2300)
+
+    console.log('Итого в корзине: ' + Basket.calculateCost())
+
+</script>
+</body>
+</html>
